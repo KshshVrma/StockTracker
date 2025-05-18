@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Stock List</title>
+</head>
+<body>
+<h2>Stock Statistics</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Symbol</th>
+        <th>Price (₹)</th>
+        <th>Open</th>
+        <th>High</th>
+        <th>Low</th>
+        <th>Volume</th>
+        <th>Previous Close</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="stock : ${stocks}">
+        <td th:text="${stock['symbol']}"></td>
+        <td th:text="${stock['05. price']}"></td>
+        <td th:text="${stock['02. open']}"></td>
+        <td th:text="${stock['03. high']}"></td>
+        <td th:text="${stock['04. low']}"></td>
+        <td th:text="${stock['04. low']}"></td>
+        <td th:text="${stock['06. volume']}"></td>
+        <td th:text="${stock['08. previous close']}"></td>
+        <td th:text="${stock['diff']}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
