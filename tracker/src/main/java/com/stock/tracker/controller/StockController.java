@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
+
+import java.sql.SQLOutput;
 import java.util.*;
 
 @Controller
@@ -21,9 +23,13 @@ public class StockController {
         RestTemplate restTemplate = new RestTemplate();
         List<Map<String, String>> stockDataList = new ArrayList<>();
 int count=0;
+        String url2 = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=" +
+                "TCS.BSE" + "&apikey=" + apiKey;
         for (String symbol : symbols) {
             String url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" +
                     symbol + "&apikey=" + apiKey;
+
+
 
             try {
                 Map<String, Object> response = restTemplate.getForObject(url, Map.class);
@@ -44,7 +50,26 @@ int count=0;
             }
         }
 
+        Map<String, Object> response2 = restTemplate.getForObject(url2, Map.class);
+       Map<String, Map<String,String>> x=(Map<String, Map<String,String>>)response2.get("Monthly Adjusted Time Series");
+//       for(Map.Entry<String,Map<String,String>> entry: x.entrySet()){
+//           System.out.println(entry.getKey());
+//           Map<String,String> mp=entry.getValue();
+//
+//           for(Map.Entry<String,String> et: mp.entrySet()){
+//               System.out.println(et.getKey());
+//               System.out.println(et.getValue());
+//           }
+//       }
+
+       Map<String,String>cp=x.get("2025-05-16");
+        System.out.println(cp.get("4. close"));
+
+//System.out.println((Map<String, Map<String,String>>)(response2.get("Monthly Adjusted Time Series")).get());
+
         model.addAttribute("stocks", stockDataList);
+        model.addAttribute("response2",response2);
+
         return "stocklist";
     }
 }
